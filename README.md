@@ -1,4 +1,4 @@
 # twitter-trolls
-**bold** Trolls on Twitter
+**Trolls on Twitter** 
 (CS 221 Project)
 
