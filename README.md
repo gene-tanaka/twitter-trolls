@@ -1,3 +1,4 @@
 # twitter-trolls
-Trolls on Twitter \\
+**bold** Trolls on Twitter
 (CS 221 Project)
+
