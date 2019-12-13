@@ -1,5 +1,5 @@
 # twitter-trolls
-**Trolls on Twitter** 
+**Trolls on Twitter** <br/>
 (CS 221 Project) <br/>
 <br/>
 * preprocessing.py script cleans up .csv data into usable format, perform feature engineering <br/>
