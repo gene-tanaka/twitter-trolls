@@ -66,7 +66,7 @@ real.shape
 fake.shape
 
 
-# In[ ]:
+# In[8]:
 
 
 train_real = real.head(10000)
@@ -137,8 +137,8 @@ def learnPredictor(trainExamples, testExamples, featureExtractor, numIters, eta)
             gradient = dHingeLoss(weights, i)
             increment(weights, -eta, gradient)
     predictor = lambda x : 1 if dotProduct(featureExtractor(x), weights) > 0 else -1
-    print('Train Error: {}'.format(evaluatePredictor(trainExamples, predictor)))
-    print('Test Error: {}'.format(evaluatePredictor(testExamples, predictor)))
+#     print('Train Error: {}'.format(evaluatePredictor(trainExamples, predictor)))
+#     print('Test Error: {}'.format(evaluatePredictor(testExamples, predictor)))
     trainPredictions = predictions(trainExamples, predictor)
     testPredictions = predictions(testExamples, predictor)
     return weights, trainPredictions, testPredictions
@@ -240,7 +240,7 @@ featureExtractor = extractCharacterFeatures(2)
 weightsCharacters2, trainPredictionsCharacters2, testPredictionsCharacters2 = learnPredictor(trainExamples, testExamples, featureExtractor, numIters=20, eta=0.01)
 
 
-# In[22]:
+# In[20]:
 
 
 def addFeatures(df, dataType):
@@ -259,10 +259,12 @@ def addFeatures(df, dataType):
     df = addNumbersInName(df)
     df = addSpecialCharactersInText(df)
     df = addCapsInText(df)
+    df = addHashtags(df)
+    df = addMentions(df)
     return df
 
 
-# In[23]:
+# In[21]:
 
 
 def addNumbersInName(df):
@@ -277,7 +279,7 @@ def addNumbersInName(df):
     return df
 
 
-# In[40]:
+# In[22]:
 
 
 def addSpecialCharactersInText(df):
@@ -293,7 +295,7 @@ def addSpecialCharactersInText(df):
     return df
 
 
-# In[41]:
+# In[23]:
 
 
 def addCapsInText(df):
@@ -309,33 +311,59 @@ def addCapsInText(df):
     return df
 
 
-# In[42]:
+# In[24]:
+
+
+def addHashtags(df):
+    hashTags = []
+    for index, row in df.iterrows():
+        text = row['text']
+        count = text.count('#')
+        hashTags.append(1.0*count/len(text))
+    df['hashTags'] = hashTags
+    return df
+
+
+# In[25]:
+
+
+def addMentions(df):
+    mentions = []
+    for index, row in df.iterrows():
+        text = row['text']
+        count = text.count('@')
+        mentions.append(1.0*count/len(text))
+    df['mentions'] = mentions
+    return df
+
+
+# In[26]:
 
 
 newTrain = addFeatures(train, 'train')
 newTest = addFeatures(test, 'test')
 
 
-# In[43]:
+# In[27]:
 
 
-newTrain.to_csv('newTrain.csv')
-newTest.to_csv('newTest.csv')
+# newTrain.to_csv('newTrain.csv')
+# newTest.to_csv('newTest.csv')
 
 
-# In[47]:
+# In[28]:
 
 
 newTrain.head()
 
 
-# In[45]:
+# In[29]:
 
 
 train_x = newTrain.drop(columns=['truth','created','name','text'])
 
 
-# In[46]:
+# In[30]:
 
 
 train_x['day'] = train_x['day'].astype(int)

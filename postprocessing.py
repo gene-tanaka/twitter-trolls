@@ -151,13 +151,13 @@ train_y.head()
 # In[16]:
 
 
-train_x_dropped = train_x.drop(columns=['day','hr','month','capsInText'])
+train_x_dropped = train_x.drop(columns=['day','hr','month','capsInText','hashTags','mentions'])
 
 
 # In[17]:
 
 
-test_x_dropped = test_x.drop(columns=['day','hr','month','capsInText'])
+test_x_dropped = test_x.drop(columns=['day','hr','month','capsInText','hashTags','mentions'])
 
 
 # In[18]:
@@ -231,7 +231,7 @@ def root_mean_squared_error(y_true, y_pred):
 
 
 classifier = Sequential()
-# classifier.add(Dense(4, activation='relu', kernel_initializer='random_normal', input_dim=11))
+# classifier.add(Dense(4, activation='relu', kernel_initializer='random_normal', input_dim=7))
 classifier.add(Dense(4, activation='relu', kernel_initializer='random_normal', input_dim=7))
 classifier.add(Dense(4, activation='relu', kernel_initializer='random_normal'))
 classifier.add(Dense(1, activation='sigmoid', kernel_initializer='random_normal'))
